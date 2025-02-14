@@ -1,0 +1,27 @@
+export const USERS_MESSAGES = {
+  VALIDATION_ERROR: 'Lỗi xác thực',
+  NAME_IS_REQUIRED: 'Tên là bắt buộc',
+  NAME_MUST_BE_STRING: 'Tên phải là một chuỗi',
+  NAME_LENGTH_MUST_BE_FROM_1_TO_100: 'Tên phải có độ dài từ 1 đến 100 ký tự',
+  EMAIL_ALREADY_EXISTS: 'Email đã tồn tại',
+  EMAIL_IS_REQUIRED: 'Email là bắt buộc',
+  EMAIL_IS_INVALID: 'Email không hợp lệ',
+  EMAIL_OR_PASSWORD_IS_INCORRECT: 'Email hoặc mật khẩu không chính xác',
+  PASSWORD_IS_REQUIRED: 'Mật khẩu là bắt buộc',
+  PASSWORD_MUST_BE_A_STRING: 'Mật khẩu phải là một chuỗi',
+  PASSWORD_LENGTH_MUST_BE_FROM_6_TO_50: 'Mật khẩu phải có độ dài từ 6 đến 50 ký tự',
+  PASSWORD_MUST_BE_STRONG: 'Mật khẩu phải mạnh (chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số, 1 ký tự đặc biệt)',
+  CONFIRM_PASSWORD_IS_REQUIRED: 'Xác nhận mật khẩu là bắt buộc',
+  CONFIRM_PASSWORD_MUST_BE_A_STRING: 'Xác nhận mật khẩu phải là một chuỗi',
+  CONFIRM_PASSWORD_LENGTH_MUST_BE_FROM_6_TO_50: 'Xác nhận mật khẩu phải có độ dài từ 6 đến 50 ký tự',
+  CONFIRM_PASSWORD_MUST_BE_STRONG:
+    'Xác nhận mật khẩu phải mạnh (chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số, 1 ký tự đặc biệt)',
+  CONFIRM_PASSWORD_IS_NOT_MATCH: 'Xác nhận mật khẩu không khớp',
+  DATA_OF_BIRTH_MUST_ISO8601: 'Ngày sinh phải theo chuẩn ISO8601',
+  LOGIN_SUCCESS: 'Đăng nhập thành công',
+  REGISTER_SUCCESS: 'Đăng ký thành công',
+  ACCESS_TOKEN_IS_REQUIRED: 'Access token là bắt buộc',
+  REFRESH_TOKEN_IS_REQUIRED: 'Refresh token là bắt buộc',
+  USERS_REFRESH_TOKEN_OR_NOT_EXISTS: 'Refresh token không tồn tại hoặc đã hết hạn',
+  LOGOUT_SUCCESS: 'Đăng xuất thành công'
+} as const
