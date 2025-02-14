@@ -1,13 +1,12 @@
 import { Router } from 'express'
+import { loginController, logoutController, registerController } from '~/controllers/users.controllers'
 import {
   accessTokenValidator,
   loginValidator,
   refreshTokenValidator,
   registerValidator
 } from '~/middlewares/users.middlewares'
-import { loginController, logoutController, registerController } from '~/controllers/users.controllers'
 import { wrapRequestHandler } from '~/utils/handlers'
-import { access } from 'fs'
 
 const usersRouter = Router()
 
