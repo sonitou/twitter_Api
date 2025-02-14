@@ -1,10 +1,12 @@
-import { Request, Response, NextFunction, RequestHandler } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import usersService from '~/services/users.services'
 import { ParamsDictionary } from 'express-serve-static-core'
-import { LoginReqBody, RegisterReqBody } from '~/models/requests/User.requests'
+import { LoginReqBody, RegisterReqBody, TokenPayload } from '~/models/requests/User.requests'
 import { ObjectId } from 'mongodb'
 import User from '~/models/schemas/User.schemas'
 import { USERS_MESSAGES } from '~/constants/messages'
+import databaseService from '~/services/database.services'
+import HTTP_STATUS from '~/constants/httpStatus'
 
 export const loginController = async (req: Request, res: Response, next: NextFunction) => {
   const user = req.user as User
@@ -13,7 +15,7 @@ export const loginController = async (req: Request, res: Response, next: NextFun
   res.json({
     message: USERS_MESSAGES.LOGIN_SUCCESS,
     result
-  }) as unknown as Promise<void>
+  })
 }
 
 export const registerController = async (
@@ -32,4 +34,29 @@ export const logoutController = async (req: Request<ParamsDictionary, any, Login
   const { refresh_token } = req.body
   const result = await usersService.logout(refresh_token)
   res.json(result)
+}
+
+export const verifyEmailController = async (req: Request, res: Response, next: NextFunction) => {
+  const { user_id } = req.decoded_email_verify_token as TokenPayload
+  const user = await databaseService.users.findOne({ _id: new ObjectId(user_id) })
+  // Nếu không tìm thấy user thì sẽ báo lỗi
+  if (!user) {
+    res.status(HTTP_STATUS.NOT_FOUND).json({
+      message: USERS_MESSAGES.USER_NOT_FOUND
+    })
+    return
+  }
+  // Đã verify rồi thì sẽ không báo lỗi
+  // trả về status OK với message là đã verify trước đó rồi
+  if (user.email_verify_token === '') {
+    res.json({
+      message: USERS_MESSAGES.EMAIL_ALREADY_VERIFIED_BEFORE
+    })
+    return
+  }
+  const result = await usersService.verifyEmail(user_id)
+  res.json({
+    message: USERS_MESSAGES.EMAIL_VERIFY_SUCCESS,
+    result
+  })
 }

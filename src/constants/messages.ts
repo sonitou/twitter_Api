@@ -23,5 +23,9 @@ export const USERS_MESSAGES = {
   ACCESS_TOKEN_IS_REQUIRED: 'Access token là bắt buộc',
   REFRESH_TOKEN_IS_REQUIRED: 'Refresh token là bắt buộc',
   USERS_REFRESH_TOKEN_OR_NOT_EXISTS: 'Refresh token không tồn tại hoặc đã hết hạn',
-  LOGOUT_SUCCESS: 'Đăng xuất thành công'
+  LOGOUT_SUCCESS: 'Đăng xuất thành công',
+  EMAIL_VERIFY_TOKEN_IS_REQUIRED: 'Email verify token là bắt buộc',
+  USER_NOT_FOUND: 'Người dùng không tồn tại',
+  EMAIL_ALREADY_VERIFIED_BEFORE: 'Email đã được xác minh trước đó',
+  EMAIL_VERIFY_SUCCESS: 'Xác minh email thành công'
 } as const
