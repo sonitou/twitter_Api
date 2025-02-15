@@ -27,5 +27,6 @@ export const USERS_MESSAGES = {
   EMAIL_VERIFY_TOKEN_IS_REQUIRED: 'Email verify token là bắt buộc',
   USER_NOT_FOUND: 'Người dùng không tồn tại',
   EMAIL_ALREADY_VERIFIED_BEFORE: 'Email đã được xác minh trước đó',
-  EMAIL_VERIFY_SUCCESS: 'Xác minh email thành công'
+  EMAIL_VERIFY_SUCCESS: 'Xác minh email thành công',
+  RESEND_VERIFY_EMAIL_SUCCESS: 'Gửi lại email xác minh thành công'
 } as const

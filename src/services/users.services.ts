@@ -12,6 +12,7 @@ import { USERS_MESSAGES } from '~/constants/messages'
 config()
 
 class UsersService {
+  // Access Token
   private signAccessToken(user_id: string) {
     return signToken({
       payload: {
@@ -24,6 +25,8 @@ class UsersService {
       }
     })
   }
+
+  // Refresh Token
   private signRefreshToken(user_id: string) {
     return signToken({
       payload: {
@@ -37,9 +40,13 @@ class UsersService {
       }
     })
   }
+
+  // Sign Access Token and Refresh Token
   private signAccessTokenAndRefreshToken(user_id: string) {
     return Promise.all([this.signAccessToken(user_id), this.signRefreshToken(user_id)])
   }
+
+  // Register
   async register(payload: RegisterReqBody) {
     const user_id = new ObjectId()
     const email_verify_token = await this.signEmailVerifyToken(user_id.toString())
@@ -62,6 +69,26 @@ class UsersService {
       refresh_token
     }
   }
+
+  // Login
+  async login(user_id: string) {
+    const [access_token, refresh_token] = await this.signAccessTokenAndRefreshToken(user_id)
+    await databaseService.refreshTokens.insertOne(
+      new RefreshToken({ user_id: new ObjectId(user_id), token: refresh_token })
+    )
+    return {
+      access_token,
+      refresh_token
+    }
+  }
+
+  // Logout
+  async logout(refresh_token: string) {
+    await databaseService.refreshTokens.deleteOne({ token: refresh_token })
+    return { message: USERS_MESSAGES.LOGOUT_SUCCESS }
+  }
+
+  // Sign Email Verify Token
   private signEmailVerifyToken(user_id: string) {
     return signToken({
       payload: {
@@ -74,6 +101,8 @@ class UsersService {
       }
     })
   }
+
+  // Verify Email
   async verifyEmail(user_id: string) {
     const [token] = await Promise.all([
       this.signAccessTokenAndRefreshToken(user_id),
@@ -93,23 +122,26 @@ class UsersService {
       refresh_token
     }
   }
+
+  async resendVerifyEmail(user_id: string) {
+    const email_verify_token = await this.signEmailVerifyToken(user_id)
+    console.log('Resend verify email: ', email_verify_token)
+
+    await databaseService.users.updateOne({ _id: new ObjectId(user_id) }, [
+      {
+        $set: {
+          email_verify_token,
+          updated_at: '$$NOW'
+        }
+      }
+    ])
+    return { message: USERS_MESSAGES.RESEND_VERIFY_EMAIL_SUCCESS }
+  }
+
+  // Kiểm tra email đã tồn tại chưa
   async checkEmailExists(email: string) {
     const user = await databaseService.users.findOne({ email })
     return Boolean(user)
-  }
-  async login(user_id: string) {
-    const [access_token, refresh_token] = await this.signAccessTokenAndRefreshToken(user_id)
-    await databaseService.refreshTokens.insertOne(
-      new RefreshToken({ user_id: new ObjectId(user_id), token: refresh_token })
-    )
-    return {
-      access_token,
-      refresh_token
-    }
-  }
-  async logout(refresh_token: string) {
-    await databaseService.refreshTokens.deleteOne({ token: refresh_token })
-    return { message: USERS_MESSAGES.LOGOUT_SUCCESS }
   }
 }
 
