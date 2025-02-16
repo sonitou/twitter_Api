@@ -9,6 +9,7 @@ import RefreshToken from '~/models/schemas/RefreshToken.schemas'
 import { ObjectId } from 'mongodb'
 import { config } from 'dotenv'
 import { USERS_MESSAGES } from '~/constants/messages'
+import { update } from 'lodash'
 config()
 
 class UsersService {
@@ -102,6 +103,20 @@ class UsersService {
     })
   }
 
+  // Sign Forgot Password Token
+  private async signForgotPasswordToken(user_id: string) {
+    return signToken({
+      payload: {
+        user_id,
+        token_type: TokenType.ForgotPasswordToken
+      },
+      privateKey: process.env.JWT_SECRET_FORGOT_PASSWORD_TOKEN as string,
+      options: {
+        expiresIn: process.env.FORGOT_PASSWORD_TOKEN_EXPIRES_IN as ms.StringValue
+      }
+    })
+  }
+
   // Verify Email
   async verifyEmail(user_id: string) {
     const [token] = await Promise.all([
@@ -136,6 +151,23 @@ class UsersService {
       }
     ])
     return { message: USERS_MESSAGES.RESEND_VERIFY_EMAIL_SUCCESS }
+  }
+
+  async forgotPassword(user_id: string) {
+    const forgot_password_token = await this.signForgotPasswordToken(user_id)
+    await databaseService.users.updateOne({ _id: new ObjectId(user_id) }, [
+      {
+        $set: {
+          forgot_password_token,
+          updated_at: '$$NOW'
+        }
+      }
+    ])
+    // Giả sử thay thế phương thức gửi mail bằng console.log
+    console.log('Forgot password token: ', forgot_password_token)
+    return {
+      message: USERS_MESSAGES.CHECK_EMAIL_TO_RESET_PASSWORD
+    }
   }
 
   // Kiểm tra email đã tồn tại chưa

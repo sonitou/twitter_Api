@@ -28,5 +28,6 @@ export const USERS_MESSAGES = {
   USER_NOT_FOUND: 'Người dùng không tồn tại',
   EMAIL_ALREADY_VERIFIED_BEFORE: 'Email đã được xác minh trước đó',
   EMAIL_VERIFY_SUCCESS: 'Xác minh email thành công',
-  RESEND_VERIFY_EMAIL_SUCCESS: 'Gửi lại email xác minh thành công'
+  RESEND_VERIFY_EMAIL_SUCCESS: 'Gửi lại email xác minh thành công',
+  CHECK_EMAIL_TO_RESET_PASSWORD: 'Kiểm tra email để đặt lại mật khẩu'
 } as const
