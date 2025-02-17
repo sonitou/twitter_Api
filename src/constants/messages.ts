@@ -29,5 +29,8 @@ export const USERS_MESSAGES = {
   EMAIL_ALREADY_VERIFIED_BEFORE: 'Email đã được xác minh trước đó',
   EMAIL_VERIFY_SUCCESS: 'Xác minh email thành công',
   RESEND_VERIFY_EMAIL_SUCCESS: 'Gửi lại email xác minh thành công',
-  CHECK_EMAIL_TO_RESET_PASSWORD: 'Kiểm tra email để đặt lại mật khẩu'
+  CHECK_EMAIL_TO_RESET_PASSWORD: 'Kiểm tra email để đặt lại mật khẩu',
+  FORGOT_PASSWORD_TOKEN_IS_REQUIRED: 'Quên mật khẩu token là bắt buộc',
+  INVALID_FORGOT_PASSWORD_TOKEN: 'Quên mật khẩu token không hợp lệ',
+  VERIFY_FORGOT_PASSWORD_SUCCESS: 'Xác minh quên mật khẩu thành công'
 } as const

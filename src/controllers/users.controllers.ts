@@ -1,14 +1,22 @@
 import { Request, Response, NextFunction } from 'express'
 import usersService from '~/services/users.services'
 import { ParamsDictionary } from 'express-serve-static-core'
-import { LoginReqBody, RegisterReqBody, TokenPayload } from '~/models/requests/User.requests'
+import {
+  ForgotPasswordReqBody,
+  LoginReqBody,
+  LogoutReqBody,
+  RegisterReqBody,
+  TokenPayload,
+  VerifyEmailReqBody,
+  VerifyForgotPasswordReqBody
+} from '~/models/requests/User.requests'
 import { ObjectId } from 'mongodb'
 import User from '~/models/schemas/User.schemas'
 import { USERS_MESSAGES } from '~/constants/messages'
 import databaseService from '~/services/database.services'
 import HTTP_STATUS from '~/constants/httpStatus'
 
-export const loginController = async (req: Request, res: Response, next: NextFunction) => {
+export const loginController = async (req: Request<ParamsDictionary, any, LoginReqBody>, res: Response) => {
   const user = req.user as User
   const user_id = user._id as ObjectId
   const result = await usersService.login(user_id.toString())
@@ -18,11 +26,7 @@ export const loginController = async (req: Request, res: Response, next: NextFun
   })
 }
 
-export const registerController = async (
-  req: Request<ParamsDictionary, any, RegisterReqBody>,
-  res: Response,
-  next: NextFunction
-) => {
+export const registerController = async (req: Request<ParamsDictionary, any, RegisterReqBody>, res: Response) => {
   const result = await usersService.register(req.body)
   res.json({
     message: USERS_MESSAGES.REGISTER_SUCCESS,
@@ -30,13 +34,17 @@ export const registerController = async (
   })
 }
 
-export const logoutController = async (req: Request<ParamsDictionary, any, LoginReqBody>, res: Response) => {
+export const logoutController = async (req: Request<ParamsDictionary, any, LogoutReqBody>, res: Response) => {
   const { refresh_token } = req.body
   const result = await usersService.logout(refresh_token)
   res.json(result)
 }
 
-export const verifyEmailController = async (req: Request, res: Response, next: NextFunction) => {
+export const verifyEmailController = async (
+  req: Request<ParamsDictionary, any, VerifyForgotPasswordReqBody>,
+  res: Response,
+  next: NextFunction
+) => {
   const { user_id } = req.decoded_email_verify_token as TokenPayload
   const user = await databaseService.users.findOne({ _id: new ObjectId(user_id) })
   // Nếu không tìm thấy user thì sẽ báo lỗi
@@ -81,8 +89,22 @@ export const resendVerifyEmailController = async (req: Request, res: Response, n
   res.json(result)
 }
 
-export const forgotPasswordController = async (req: Request, res: Response, next: NextFunction) => {
+export const forgotPasswordController = async (
+  req: Request<ParamsDictionary, any, ForgotPasswordReqBody>,
+  res: Response,
+  next: NextFunction
+) => {
   const { _id } = req.user as User
   const result = await usersService.forgotPassword((_id as ObjectId).toString())
   res.json(result)
+}
+
+export const verifyForgotPasswordController = async (
+  req: Request<ParamsDictionary, any, VerifyForgotPasswordReqBody>,
+  res: Response,
+  next: NextFunction
+) => {
+  res.json({
+    message: USERS_MESSAGES.VERIFY_FORGOT_PASSWORD_SUCCESS
+  })
 }
