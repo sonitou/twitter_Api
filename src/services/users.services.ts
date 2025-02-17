@@ -170,6 +170,24 @@ class UsersService {
     }
   }
 
+  async resetPassword(user_id: string, password: string) {
+    databaseService.users.updateOne(
+      { _id: new ObjectId(user_id) },
+      {
+        $set: {
+          forgot_password_token: '',
+          password: hashPassword(password)
+        },
+        $currentDate: {
+          updated_at: true
+        }
+      }
+    )
+    return {
+      message: USERS_MESSAGES.RESET_PASSWORD_SUCCESS
+    }
+  }
+
   // Kiểm tra email đã tồn tại chưa
   async checkEmailExists(email: string) {
     const user = await databaseService.users.findOne({ email })

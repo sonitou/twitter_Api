@@ -32,5 +32,6 @@ export const USERS_MESSAGES = {
   CHECK_EMAIL_TO_RESET_PASSWORD: 'Kiểm tra email để đặt lại mật khẩu',
   FORGOT_PASSWORD_TOKEN_IS_REQUIRED: 'Quên mật khẩu token là bắt buộc',
   INVALID_FORGOT_PASSWORD_TOKEN: 'Quên mật khẩu token không hợp lệ',
-  VERIFY_FORGOT_PASSWORD_SUCCESS: 'Xác minh quên mật khẩu thành công'
+  VERIFY_FORGOT_PASSWORD_SUCCESS: 'Xác minh quên mật khẩu thành công',
+  RESET_PASSWORD_SUCCESS: 'Đặt lại mật khẩu thành công'
 } as const
