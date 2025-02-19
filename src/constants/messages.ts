@@ -33,5 +33,7 @@ export const USERS_MESSAGES = {
   FORGOT_PASSWORD_TOKEN_IS_REQUIRED: 'Quên mật khẩu token là bắt buộc',
   INVALID_FORGOT_PASSWORD_TOKEN: 'Quên mật khẩu token không hợp lệ',
   VERIFY_FORGOT_PASSWORD_SUCCESS: 'Xác minh quên mật khẩu thành công',
-  RESET_PASSWORD_SUCCESS: 'Đặt lại mật khẩu thành công'
+  RESET_PASSWORD_SUCCESS: 'Đặt lại mật khẩu thành công',
+  GET_USER_SUCCESS: 'Tài khoản đã được lấy thành công',
+  USER_NOT_VERIFIED: 'Người dùng chưa xác thực'
 } as const

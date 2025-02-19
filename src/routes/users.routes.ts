@@ -1,11 +1,13 @@
-import { Router } from 'express'
+import { RequestHandler, Router } from 'express'
 import {
   forgotPasswordController,
+  getMeController,
   loginController,
   logoutController,
   registerController,
   resendVerifyEmailController,
   resetPasswordController,
+  updateMeController,
   verifyEmailController,
   verifyForgotPasswordController
 } from '~/controllers/users.controllers'
@@ -16,6 +18,7 @@ import {
   refreshTokenValidator,
   registerValidator,
   resetPasswordValidator,
+  verifiedUserValidator,
   verifyEmailTokenValidator,
   verifyForgotPasswordTokenValidator
 } from '~/middlewares/users.middlewares'
@@ -46,7 +49,6 @@ usersRouter.post('/register', registerValidator, wrapRequestHandler(registerCont
  * Body: {refresh_token: string}
  */
 usersRouter.post('/logout', accessTokenValidator, refreshTokenValidator, wrapRequestHandler(logoutController))
-export default usersRouter
 
 /**
  * Description. Verify email when user client click on the link in email
@@ -94,3 +96,22 @@ usersRouter.post(
 // * Body: {forgot_password_token: string, password: string, confirm_password: string}
 // */
 usersRouter.post('/reset-password', resetPasswordValidator, wrapRequestHandler(resetPasswordController))
+
+// //**
+// * Description. Get information user
+// * Path: /me
+// * Method: GET
+// * Header: { Authorization: Bearer <access_token> }
+// */
+usersRouter.get('/me', accessTokenValidator, wrapRequestHandler(getMeController))
+
+// //**
+// * Description. Update information user
+// * Path: /me
+// * Method: PATCH
+// * Header: { Authorization: Bearer <access_token> }
+// * Body: UserSchema
+// */
+usersRouter.patch('/update-me', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(updateMeController))
+
+export default usersRouter

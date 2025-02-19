@@ -8,9 +8,11 @@ import usersService from '~/services/users.services'
 import { hashPassword } from '~/utils/crypto'
 import { verifyToken } from '~/utils/jwt'
 import { validate } from '~/utils/validation'
-import { Request } from 'express'
+import { Response as ExpressResponse, NextFunction, Request } from 'express'
 import { capitalize } from 'lodash'
 import { ObjectId } from 'mongodb'
+import { TokenPayload } from '~/models/requests/User.requests'
+import { UserVerifyStatus } from '~/constants/enums'
 
 /**
  * Middleware kiểm tra dữ liệu đầu vào khi đăng nhập
@@ -361,3 +363,16 @@ export const resetPasswordValidator = validate(
     ['body']
   )
 )
+
+export const verifiedUserValidator = (req: Request, res: ExpressResponse, next: NextFunction) => {
+  const { verify } = req.decoded_authorization as TokenPayload
+  if (verify !== UserVerifyStatus.verified) {
+    return next(
+      new ErrorWithStatus({
+        message: USERS_MESSAGES.USER_NOT_VERIFIED,
+        status: HTTP_STATUS.FORBIDDEN
+      })
+    )
+  }
+  next()
+}
