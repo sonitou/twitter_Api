@@ -35,5 +35,16 @@ export const USERS_MESSAGES = {
   VERIFY_FORGOT_PASSWORD_SUCCESS: 'Xác minh quên mật khẩu thành công',
   RESET_PASSWORD_SUCCESS: 'Đặt lại mật khẩu thành công',
   GET_USER_SUCCESS: 'Tài khoản đã được lấy thành công',
-  USER_NOT_VERIFIED: 'Người dùng chưa xác thực'
+  USER_NOT_VERIFIED: 'Người dùng chưa xác thực',
+  BIO_MUST_BE_STRING: 'Giá trị BIO phải là một chuỗi',
+  BIO_LENGTH: 'BIO phải có độ dài từ 1 đến 200 ký tự',
+  LOCATION_MUST_BE_STRING: 'Vị trí phải là một chuỗi',
+  LOCATION_LENGTH: 'Vị trí có độ dài từ 1 đên 50 ký tự',
+  WEBSITE_MUST_BE_STRING: 'Giá trị WEBSITE phải là một chuỗi',
+  WEBSITE_LENGTH: 'WEBSITE có độ dài từ 1 đến 200 ký tự',
+  USERNAME_MUST_BE_STRING: 'Họ và tên phải là một chuỗi',
+  USERNAME_LENGTH: 'Họ và tên có độ dài từ 1 đến 50 ký tự',
+  IMAGE_URL_MUST_BE_STRING: 'Giá trị IMAGE_URL phải là một chuỗi',
+  IMAGE_URL_LENGTH: 'IMAGE_URL có độ dài từ 1 đến 400 ký tự',
+  UPDATE_ME_SUCCESS: 'Cập nhật thông tin thành công'
 } as const
