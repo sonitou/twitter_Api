@@ -46,5 +46,6 @@ export const USERS_MESSAGES = {
   USERNAME_LENGTH: 'Họ và tên có độ dài từ 1 đến 50 ký tự',
   IMAGE_URL_MUST_BE_STRING: 'Giá trị IMAGE_URL phải là một chuỗi',
   IMAGE_URL_LENGTH: 'IMAGE_URL có độ dài từ 1 đến 400 ký tự',
-  UPDATE_ME_SUCCESS: 'Cập nhật thông tin thành công'
+  UPDATE_ME_SUCCESS: 'Cập nhật thông tin thành công',
+  GET_PROFILE_SUCCESS: 'Lấy thông tin hồ sơ thành công'
 } as const
