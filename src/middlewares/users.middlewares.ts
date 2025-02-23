@@ -13,6 +13,7 @@ import { capitalize, trim } from 'lodash'
 import { ObjectId } from 'mongodb'
 import { TokenPayload } from '~/models/requests/User.requests'
 import { UserVerifyStatus } from '~/constants/enums'
+import { REGEX_USERNAME } from '~/constants/regex'
 
 /**
  * Middleware kiểm tra dữ liệu đầu vào khi đăng nhập
@@ -479,14 +480,20 @@ export const updateMeValidator = validate(
         isString: {
           errorMessage: USERS_MESSAGES.USERNAME_MUST_BE_STRING
         },
-        isLength: {
-          options: {
-            min: 1,
-            max: 50
-          },
-          errorMessage: USERS_MESSAGES.USERNAME_LENGTH
-        },
-        trim: true
+        trim: true,
+        custom: {
+          options: async (value: string, { req }) => {
+            if (!REGEX_USERNAME.test(value)) {
+              throw Error(USERS_MESSAGES.USERNAME_INVALID)
+            }
+            const user = await databaseService.users.findOne({ username: value })
+            // Nếu đã tồn tại username này trong db
+            // thì chúng ta không cho phép update
+            if (user) {
+              throw Error(USERS_MESSAGES.USERNAME_EXISTED)
+            }
+          }
+        }
       },
       avatar: imageSchema,
       cover_photo: imageSchema
