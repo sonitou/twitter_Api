@@ -11,6 +11,7 @@ import { config } from 'dotenv'
 import { USERS_MESSAGES } from '~/constants/messages'
 import { ErrorWithStatus } from '~/models/Error'
 import HTTP_STATUS from '~/constants/httpStatus'
+import Follower from '~/models/schemas/Follower.schemas'
 config()
 
 class UsersService {
@@ -270,6 +271,43 @@ class UsersService {
       }
     )
     return user
+  }
+  // cách 1
+  // async follow(user_id: string, followed_user_id: string) {
+  //   const follower = await databaseService.followers.findOne({
+  //     user_id: new ObjectId(user_id),
+  //     followed_user_id: new ObjectId(followed_user_id)
+  //   })
+  //   if (follower === null) {
+  //     await databaseService.followers.insertOne(
+  //       new Follower({
+  //         user_id: new ObjectId(user_id),
+  //         followed_user_id: new ObjectId(followed_user_id)
+  //       })
+  //     )
+  //     return {
+  //       message: USERS_MESSAGES.FOLLOW_SUCCESS
+  //     }
+  //   }
+  //   return {
+  //     message: USERS_MESSAGES.FOLLOWED
+  //   }
+  // }
+
+  // giảm race condition và tăng hiệu suất vì ta không cần gọi findOne() trước
+  // Cách 2
+  async follow(user_id: string, followed_user_id: string) {
+    const result = await databaseService.followers.updateOne(
+      { user_id: new ObjectId(user_id), followed_user_id: new ObjectId(followed_user_id) },
+      { $setOnInsert: { created_at: new Date() } },
+      { upsert: true } // Nếu không tìm thấy, nó sẽ chèn mới
+    )
+
+    if (result.upsertedCount > 0) {
+      return { message: USERS_MESSAGES.FOLLOW_SUCCESS }
+    }
+
+    return { message: USERS_MESSAGES.FOLLOWED }
   }
 }
 

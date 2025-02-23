@@ -47,5 +47,8 @@ export const USERS_MESSAGES = {
   IMAGE_URL_MUST_BE_STRING: 'Giá trị IMAGE_URL phải là một chuỗi',
   IMAGE_URL_LENGTH: 'IMAGE_URL có độ dài từ 1 đến 400 ký tự',
   UPDATE_ME_SUCCESS: 'Cập nhật thông tin thành công',
-  GET_PROFILE_SUCCESS: 'Lấy thông tin hồ sơ thành công'
+  GET_PROFILE_SUCCESS: 'Lấy thông tin hồ sơ thành công',
+  FOLLOW_SUCCESS: 'Theo dõi thành công',
+  INVALID_FOLLOWED_USER_ID: 'id người dùng theo dõi không hợp lệ',
+  FOLLOWED: 'Đã theo dõi '
 } as const
