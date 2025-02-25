@@ -55,5 +55,7 @@ export const USERS_MESSAGES = {
   NOT_FOLLOWING: 'Chưa theo dõi ',
   INVALID_USER_ID: 'ID người dùng không hợp lệ',
   USERNAME_INVALID: 'Tên người dùng không hợp lệ',
-  USERNAME_EXISTED: 'Tên người dùng đã tồn tại'
+  USERNAME_EXISTED: 'Tên người dùng đã tồn tại',
+  OLD_PASSWORD_NOT_MATCH: 'Mật khẩu cũ không khớp',
+  PASSWORD_CHANGE_SUCCESS: 'Đổi mật khẩu thành công'
 } as const
