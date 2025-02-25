@@ -12,7 +12,6 @@ import {
   ResetPasswordReqBody,
   TokenPayload,
   UnfollowerReqParams,
-  VerifyEmailReqBody,
   VerifyForgotPasswordReqBody
 } from '~/models/requests/User.requests'
 import { ObjectId } from 'mongodb'
@@ -20,7 +19,6 @@ import User from '~/models/schemas/User.schemas'
 import { USERS_MESSAGES } from '~/constants/messages'
 import databaseService from '~/services/database.services'
 import HTTP_STATUS from '~/constants/httpStatus'
-import { verify } from 'crypto'
 
 export const loginController = async (req: Request<ParamsDictionary, any, LoginReqBody>, res: Response) => {
   const user = req.user as User
