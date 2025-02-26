@@ -3,7 +3,7 @@ import usersRouter from '~/routes/users.routes'
 import databaseService from '~/services/database.services'
 import { defaultErrorHandler } from './middlewares/error.middlewares'
 import mediasRouter from './routes/medias.routes'
-import { initFile } from './constants/file'
+import { initFile } from './utils/file'
 databaseService.connect()
 const app = express()
 const port = 4000
