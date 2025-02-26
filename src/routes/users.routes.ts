@@ -168,6 +168,7 @@ usersRouter.post(
 // * Method: DELETE
 // * Header: { Authorization: Bearer <access_token> }
 // */
+
 usersRouter.delete(
   '/follow/:user_id',
   accessTokenValidator,
