@@ -2,7 +2,7 @@ import { Request } from 'express'
 import path from 'path'
 import sharp from 'sharp'
 import fs from 'fs'
-import { getNameFromFullname, handleUploadImage } from '~/utils/file'
+import { getNameFromFullname, handleUploadImage, handleUploadVideo } from '~/utils/file'
 import { MediaType } from '~/constants/enums'
 import { isProduction } from '~/constants/config'
 import { config } from 'dotenv'
@@ -28,6 +28,18 @@ class MediasService {
         }
       })
     )
+    return result
+  }
+  async uploadVideo(req: Request) {
+    const files = await handleUploadVideo(req)
+    const result: Media[] = files.map((file) => {
+      return {
+        url: isProduction
+          ? `${process.env.HOST}/static/video/${file.newFilename}`
+          : `http://localhost:${process.env.PORT}/static/video/${file.newFilename}`,
+        type: MediaType.Video
+      }
+    })
     return result
   }
 }
