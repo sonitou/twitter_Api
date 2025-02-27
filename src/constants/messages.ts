@@ -58,5 +58,6 @@ export const USERS_MESSAGES = {
   USERNAME_EXISTED: 'Tên người dùng đã tồn tại',
   OLD_PASSWORD_NOT_MATCH: 'Mật khẩu cũ không khớp',
   PASSWORD_CHANGE_SUCCESS: 'Đổi mật khẩu thành công',
-  UPLOAD_SUCCESS: 'Tải lên thành công'
+  UPLOAD_SUCCESS: 'Tải lên thành công',
+  REFRESH_TOKEN_SUCCESS: 'Làm mới token thành công'
 } as const

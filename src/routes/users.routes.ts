@@ -7,6 +7,7 @@ import {
   getProfileController,
   loginController,
   logoutController,
+  refreshTokenController,
   registerController,
   resendVerifyEmailController,
   resetPasswordController,
@@ -44,12 +45,21 @@ const usersRouter = Router()
  */
 usersRouter.post('/login', loginValidator, wrapRequestHandler(loginController))
 /**
+ * Description: Refresh token
+ * path /refresh-token
+ * Method: POST
+ * Body: {refresh_token: string}
+ */
+usersRouter.post('/refresh-token', refreshTokenValidator, wrapRequestHandler(refreshTokenController))
+
+/**
  * Description. Register a new user
  * Path: /register
  * Method: POST
  * Body: {name: string, email: string, password: string, confirm_password,
  * data_of_birth: IS08601}
  */
+
 usersRouter.post('/register', registerValidator, wrapRequestHandler(registerController))
 /**
  * Description. logout a new user

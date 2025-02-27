@@ -30,6 +30,10 @@ export interface LoginReqBody {
   password: string
 }
 
+export interface RefreshTokenReqBody {
+  refresh_token: string
+}
+
 export interface LogoutReqBody {
   refresh_token: string
 }
