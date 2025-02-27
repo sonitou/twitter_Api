@@ -5,6 +5,7 @@ import { defaultErrorHandler } from './middlewares/error.middlewares'
 import mediasRouter from './routes/medias.routes'
 import { initFile } from './utils/file'
 import { config } from 'dotenv'
+import { UPLOAD_DIR } from './constants/dir'
 config()
 databaseService.connect()
 const app = express()
@@ -13,6 +14,7 @@ initFile()
 app.use(express.json())
 app.use('/users', usersRouter)
 app.use('/medias', mediasRouter)
+app.use('/static', express.static(UPLOAD_DIR))
 app.use(defaultErrorHandler as express.ErrorRequestHandler)
 
 // Khởi động server
