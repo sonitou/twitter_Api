@@ -2,10 +2,10 @@ import express from 'express'
 import usersRouter from '~/routes/users.routes'
 import databaseService from '~/services/database.services'
 import { defaultErrorHandler } from './middlewares/error.middlewares'
-import mediasRouter from './routes/medias.routes'
 import { initFile } from './utils/file'
 import { config } from 'dotenv'
 import { UPLOAD_IMAGE_DIR, UPLOAD_VIDEO_DIR } from './constants/dir'
+import mediasRouter from './routes/medias.routes'
 config()
 databaseService.connect()
 const app = express()
