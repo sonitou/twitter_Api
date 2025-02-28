@@ -9,7 +9,7 @@ import mediasRouter from './routes/medias.routes'
 config()
 
 databaseService.connect().then(() => {
-  databaseService.indexUser()
+  databaseService.indexUsers()
   databaseService.indexRefreshTokens()
   databaseService.indexFollowers()
 })
