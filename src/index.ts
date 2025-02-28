@@ -10,6 +10,8 @@ config()
 
 databaseService.connect().then(() => {
   databaseService.indexUser()
+  databaseService.indexRefreshTokens()
+  databaseService.indexFollowers()
 })
 
 const app = express()
