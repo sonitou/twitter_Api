@@ -7,7 +7,11 @@ import { config } from 'dotenv'
 import { UPLOAD_IMAGE_DIR, UPLOAD_VIDEO_DIR } from './constants/dir'
 import mediasRouter from './routes/medias.routes'
 config()
-databaseService.connect()
+
+databaseService.connect().then(() => {
+  databaseService.indexUser()
+})
+
 const app = express()
 const port = process.env.PORT || 4000
 initFile()
