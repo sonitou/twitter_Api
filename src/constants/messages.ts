@@ -72,5 +72,10 @@ export const TWEETS_MESSAGES = {
   CONTENT_MUST_BE_EMPTY_STRING: 'Nội dung phải là một chuỗi rỗng',
   HASHTAGS_MUST_BE_AN_ARRAY_OF_STRING: 'Hashtags phải là một mảng chuỗi',
   MENTIONS_MUST_BE_AN_ARRAY_OF_USER_ID: 'Mentions phải là một mảng ID người dùng',
-  MEDIAS_MUST_BE_AN_ARRAY_OF_MEDIA_OBJECT: 'Medias phải là một mảng đối tượng media'
+  MEDIAS_MUST_BE_AN_ARRAY_OF_MEDIA_OBJECT: 'Medias phải là một mảng đối tượng media',
+  CREATE_TWEET_SUCCESS: 'Tạo Tweet thành công '
 } as const
+
+export const BOOKMARK_MESSAGES = {
+  BOOKMARK_SUCCESSFULLY: 'Bookmark thành công'
+}
