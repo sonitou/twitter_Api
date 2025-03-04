@@ -61,3 +61,16 @@ export const USERS_MESSAGES = {
   UPLOAD_SUCCESS: 'Tải lên thành công',
   REFRESH_TOKEN_SUCCESS: 'Làm mới token thành công'
 } as const
+
+export const TWEETS_MESSAGES = {
+  INVALID_TYPE: 'Type không hợp lệ',
+  INVALID_AUDIENCE: 'Audience không hợp lệ',
+  INVALID_PARENT_ID: 'Parent ID không hợp lệ',
+  PARENT_ID_MUST_BE_NULL: 'Parent ID phải là null',
+  PARENT_ID_MUST_BE_A_VALID_TWEET_ID: 'Parent ID phải là một ID tweet hợp lệ',
+  CONTENT_MUST_BE_A_NON_EMPTY_STRING: 'Nội dung phải là một chuỗi không rỗng',
+  CONTENT_MUST_BE_EMPTY_STRING: 'Nội dung phải là một chuỗi rỗng',
+  HASHTAGS_MUST_BE_AN_ARRAY_OF_STRING: 'Hashtags phải là một mảng chuỗi',
+  MENTIONS_MUST_BE_AN_ARRAY_OF_USER_ID: 'Mentions phải là một mảng ID người dùng',
+  MEDIAS_MUST_BE_AN_ARRAY_OF_MEDIA_OBJECT: 'Medias phải là một mảng đối tượng media'
+} as const
