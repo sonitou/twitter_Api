@@ -4,6 +4,7 @@ import User from '~/models/schemas/User.schemas'
 import RefreshToken from '~/models/schemas/RefreshToken.schemas'
 import Follower from '~/models/schemas/Follower.schemas'
 import Tweet from '~/models/schemas/Tweet.schemas'
+import Hashtag from '~/models/schemas/Hashtag.schemas'
 config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@twitter.qwzev.mongodb.net/?retryWrites=true&w=majority&appName=twitter`
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -66,7 +67,7 @@ class DatabaseService {
   }
 
   get users(): Collection<User> {
-    return this.db.collection('users')
+    return this.db.collection(process.env.DB_USERS_COLLECTION as string)
   }
 
   get refreshTokens(): Collection<RefreshToken> {
@@ -78,7 +79,11 @@ class DatabaseService {
   }
 
   get tweets(): Collection<Tweet> {
-    return this.db.collection(process.env.DB_TWEET_COLLECTION as string)
+    return this.db.collection(process.env.DB_TWEETS_COLLECTION as string)
+  }
+
+  get hashtags(): Collection<Hashtag> {
+    return this.db.collection(process.env.DB_HASHTAGS_COLLECTION as string)
   }
 }
 

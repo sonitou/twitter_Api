@@ -22,8 +22,8 @@ export enum TweetAudience {
 }
 
 export enum TweetType {
-  Tweet,
-  Retweet,
-  Comment,
-  QuoteTweet
+  Tweet, // 0 - Tweet bình thường
+  Retweet, // 1 - Retweet (chia sẻ lại tweet của người khác)
+  Comment, // 2 - Bình luận (trả lời một tweet)
+  QuoteTweet // 3 - Trích dẫn tweet (retweet kèm nội dung)
 }
