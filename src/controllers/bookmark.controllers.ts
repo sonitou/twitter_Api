@@ -19,7 +19,7 @@ export const bookmarkTweetController = async (
 }
 
 export const getBookmarksController = async (req: Request, res: Response, next: NextFunction) => {
-  const { user_id } = req.decoded_authorization as { user_id: string }
+  const { user_id } = req.decoded_authorization as TokenPayload
 
   // Gọi service để lấy danh sách bookmarks của user
   const bookmarks = await bookmarksService.getUserBookmarks(user_id)
@@ -28,5 +28,17 @@ export const getBookmarksController = async (req: Request, res: Response, next: 
   res.json({
     message: BOOKMARK_MESSAGES.GET_BOOKMARK_SUCCESSFULLY,
     bookmarks
+  })
+}
+
+export const unbookmarkTweetController = async (req: Request, res: Response, next: NextFunction) => {
+  const { user_id } = req.decoded_authorization as TokenPayload
+  const { tweet_id } = req.params
+
+  // Gọi service để unbookmark tweet
+  await bookmarksService.unBookmarkByTweetId(user_id, tweet_id)
+
+  res.json({
+    message: BOOKMARK_MESSAGES.UNBOOKMARK_SUCCESSFULLY
   })
 }
