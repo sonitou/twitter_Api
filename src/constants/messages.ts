@@ -73,7 +73,9 @@ export const TWEETS_MESSAGES = {
   HASHTAGS_MUST_BE_AN_ARRAY_OF_STRING: 'Hashtags phải là một mảng chuỗi',
   MENTIONS_MUST_BE_AN_ARRAY_OF_USER_ID: 'Mentions phải là một mảng ID người dùng',
   MEDIAS_MUST_BE_AN_ARRAY_OF_MEDIA_OBJECT: 'Medias phải là một mảng đối tượng media',
-  CREATE_TWEET_SUCCESS: 'Tạo Tweet thành công '
+  CREATE_TWEET_SUCCESS: 'Tạo Tweet thành công ',
+  INVALID_TWEET_ID: 'ID tweet không hợp lệ',
+  TWEET_NOT_FOUND: 'Tweet không tồn tại'
 } as const
 
 export const BOOKMARK_MESSAGES = {
