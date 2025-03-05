@@ -81,3 +81,8 @@ export const BOOKMARK_MESSAGES = {
   GET_BOOKMARK_SUCCESSFULLY: 'Lấy danh sách bookmarks thành công',
   UNBOOKMARK_SUCCESSFULLY: 'Bỏ bookmark thành công'
 }
+
+export const LIKE_MESSAGES = {
+  LIKE_SUCCESSFULLY: 'Thích thành công',
+  UNLIKE_SUCCESSFULLY: 'Bỏ thích thành công'
+}

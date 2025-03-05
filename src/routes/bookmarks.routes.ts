@@ -26,7 +26,7 @@ bookmarksRouter.post('', accessTokenValidator, verifiedUserValidator, wrapReques
 bookmarksRouter.get('/', accessTokenValidator, verifiedUserValidator, wrapRequestHandler(getBookmarksController))
 
 /**
- * Description: Create tweets
+ * Description: UnBookmark tweets
  * path /tweets/:tweet_id
  * Method: DELETE
  * Body: TweetRequestBody

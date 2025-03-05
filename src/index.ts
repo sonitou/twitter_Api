@@ -8,6 +8,7 @@ import { UPLOAD_IMAGE_DIR, UPLOAD_VIDEO_DIR } from './constants/dir'
 import mediasRouter from './routes/medias.routes'
 import tweetsRouter from './routes/Tweet.routes'
 import bookmarksRouter from './routes/bookmarks.routes'
+import likesRouter from './routes/likes.routes'
 config()
 
 databaseService.connect().then(() => {
@@ -24,6 +25,7 @@ app.use('/users', usersRouter)
 app.use('/medias', mediasRouter)
 app.use('/tweet', tweetsRouter)
 app.use('/bookmarks', bookmarksRouter)
+app.use('/likes', likesRouter)
 app.use('/static/image', express.static(UPLOAD_IMAGE_DIR))
 app.use('/static/video', express.static(UPLOAD_VIDEO_DIR))
 app.use(defaultErrorHandler as express.ErrorRequestHandler)
