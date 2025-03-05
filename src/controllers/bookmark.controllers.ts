@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { ParamsDictionary } from 'express-serve-static-core'
 import { TokenPayload } from '~/models/requests/User.requests'
 
@@ -15,5 +15,18 @@ export const bookmarkTweetController = async (
   res.json({
     message: BOOKMARK_MESSAGES.BOOKMARK_SUCCESSFULLY,
     result
+  })
+}
+
+export const getBookmarksController = async (req: Request, res: Response, next: NextFunction) => {
+  const { user_id } = req.decoded_authorization as { user_id: string }
+
+  // Gọi service để lấy danh sách bookmarks của user
+  const bookmarks = await bookmarksService.getUserBookmarks(user_id)
+
+  // Trả về response
+  res.json({
+    message: BOOKMARK_MESSAGES.GET_BOOKMARK_SUCCESSFULLY,
+    bookmarks
   })
 }

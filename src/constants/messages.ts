@@ -77,5 +77,6 @@ export const TWEETS_MESSAGES = {
 } as const
 
 export const BOOKMARK_MESSAGES = {
-  BOOKMARK_SUCCESSFULLY: 'Bookmark thành công'
+  BOOKMARK_SUCCESSFULLY: 'Bookmark thành công',
+  GET_BOOKMARK_SUCCESSFULLY: 'Lấy danh sách bookmarks thành công'
 }
