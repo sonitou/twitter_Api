@@ -8,7 +8,7 @@ import usersService from '~/services/users.services'
 import { hashPassword } from '~/utils/crypto'
 import { verifyToken } from '~/utils/jwt'
 import { validate } from '~/utils/validation'
-import { Response as ExpressResponse, NextFunction, Request } from 'express'
+import e, { Response as ExpressResponse, NextFunction, Request, RequestHandler } from 'express'
 import { capitalize, trim } from 'lodash'
 import { ObjectId } from 'mongodb'
 import { TokenPayload } from '~/models/requests/User.requests'
@@ -551,3 +551,13 @@ export const changePasswordValidator = validate(
     confirm_password: confirm_passwordSchema
   })
 )
+
+// kiểm tra xem user có đăng nhập hay không.
+export const isUserLoggedInValidator = (middleware: RequestHandler): RequestHandler => {
+  return (req, res, next) => {
+    if (req.headers.authorization) {
+      return middleware(req, res, next)
+    }
+    next()
+  }
+}
