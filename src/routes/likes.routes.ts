@@ -24,7 +24,6 @@ likesRouter.post(
  * Description: Unlike Tweet
  * Path: /tweets/:tweet_id
  * Method: DELETE
- * Body: { tweet_id: string }
  * Header: { Authorization: Bearer <access_token> }
  */
 likesRouter.delete(
