@@ -59,7 +59,8 @@ export const USERS_MESSAGES = {
   OLD_PASSWORD_NOT_MATCH: 'Mật khẩu cũ không khớp',
   PASSWORD_CHANGE_SUCCESS: 'Đổi mật khẩu thành công',
   UPLOAD_SUCCESS: 'Tải lên thành công',
-  REFRESH_TOKEN_SUCCESS: 'Làm mới token thành công'
+  REFRESH_TOKEN_SUCCESS: 'Làm mới token thành công',
+  USER_ACCOUNT_IS_BANNED: 'Tài khoản người dùng đã bị cấm'
 } as const
 
 export const TWEETS_MESSAGES = {
@@ -75,7 +76,8 @@ export const TWEETS_MESSAGES = {
   MEDIAS_MUST_BE_AN_ARRAY_OF_MEDIA_OBJECT: 'Medias phải là một mảng đối tượng media',
   CREATE_TWEET_SUCCESS: 'Tạo Tweet thành công ',
   INVALID_TWEET_ID: 'ID tweet không hợp lệ',
-  TWEET_NOT_FOUND: 'Tweet không tồn tại'
+  TWEET_NOT_FOUND: 'Tweet không tồn tại',
+  TWEET_IS_NOT_PUBLIC: 'Tweet không công khai'
 } as const
 
 export const BOOKMARK_MESSAGES = {
