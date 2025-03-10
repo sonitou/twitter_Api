@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createTweetController, getTweetController } from '~/controllers/tweet.controllers'
+import { createTweetController, getTweetChildrendController, getTweetController } from '~/controllers/tweet.controllers'
 import { audienceValidator, createTweetValidator, tweetIdValidator } from '~/middlewares/tweets.middlewares'
 import { accessTokenValidator, isUserLoggedInValidator, verifiedUserValidator } from '~/middlewares/users.middlewares'
 import { wrapRequestHandler } from '~/utils/handlers'
@@ -26,10 +26,26 @@ tweetsRouter.post(
  */
 tweetsRouter.get(
   '/:tweet_id',
+  tweetIdValidator,
   isUserLoggedInValidator(accessTokenValidator),
   isUserLoggedInValidator(verifiedUserValidator),
-  tweetIdValidator,
-  // audienceValidator,
+  audienceValidator,
   wrapRequestHandler(getTweetController)
+)
+
+/**
+ * Description: Get tweets children
+ * path /:tweet_id/children
+ * Method: GET
+ * Header: {Authorization?: Bearer <access_token>}
+ * Query: {limit: number, page: number, tweet_type: TweetType}
+ */
+tweetsRouter.get(
+  '/:tweet_id/children',
+  tweetIdValidator,
+  isUserLoggedInValidator(accessTokenValidator),
+  isUserLoggedInValidator(verifiedUserValidator),
+  audienceValidator,
+  wrapRequestHandler(getTweetChildrendController)
 )
 export default tweetsRouter

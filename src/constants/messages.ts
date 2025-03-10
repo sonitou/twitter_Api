@@ -77,7 +77,9 @@ export const TWEETS_MESSAGES = {
   CREATE_TWEET_SUCCESS: 'Tạo Tweet thành công ',
   INVALID_TWEET_ID: 'ID tweet không hợp lệ',
   TWEET_NOT_FOUND: 'Tweet không tồn tại',
-  TWEET_IS_NOT_PUBLIC: 'Tweet không công khai'
+  TWEET_IS_NOT_PUBLIC: 'Tweet không công khai',
+  GET_TWEET_SUCCESSFULLY: 'Lấy tweet thành công',
+  GET_TWEET_CHILDREN_SUCCESSFULLY: 'Lấy tweet con thành công'
 } as const
 
 export const BOOKMARK_MESSAGES = {
