@@ -29,7 +29,7 @@ tweetsRouter.get(
   isUserLoggedInValidator(accessTokenValidator),
   isUserLoggedInValidator(verifiedUserValidator),
   tweetIdValidator,
-  audienceValidator,
+  // audienceValidator,
   wrapRequestHandler(getTweetController)
 )
 export default tweetsRouter
