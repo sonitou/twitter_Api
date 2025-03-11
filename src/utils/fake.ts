@@ -16,12 +16,12 @@ import Hashtag from '~/models/schemas/Hashtag.schemas'
 import Tweet from '~/models/schemas/Tweet.schemas'
 
 // Mật khẩu cho các fake user
-const PASSWORD = 'Duoc123!'
+const PASSWORD = '123456Son@'
 // ID của tài khoản của mình, dùng để follow người khác
-const MYID = new ObjectId('65bbbae8c5c78407e694f001')
+const MYID = new ObjectId('67caaa7a685427123f41e116')
 
 // Số lượng user được tạo, mỗi user sẽ mặc định tweet 2 cái
-const USER_COUNT = 400
+const USER_COUNT = 50
 
 const createRandomUser = () => {
   const user: RegisterReqBody = {

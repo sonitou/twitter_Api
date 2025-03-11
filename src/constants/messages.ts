@@ -81,7 +81,8 @@ export const TWEETS_MESSAGES = {
   GET_TWEET_SUCCESSFULLY: 'Lấy tweet thành công',
   GET_TWEET_CHILDREN_SUCCESSFULLY: 'Lấy tweet con thành công',
   INVALID_LIMIT: 'Giới hạn không hợp lệ (0 < limit <= 100)',
-  INVALID_PAGE: 'Trang không hợp lệ (0 < page)'
+  INVALID_PAGE: 'Trang không hợp lệ (0 < page)',
+  GET_NEW_FEEDS_SUCCESSFULLY: 'Lấy new feeds thành công'
 } as const
 
 export const BOOKMARK_MESSAGES = {
