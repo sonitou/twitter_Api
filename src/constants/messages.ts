@@ -79,7 +79,9 @@ export const TWEETS_MESSAGES = {
   TWEET_NOT_FOUND: 'Tweet không tồn tại',
   TWEET_IS_NOT_PUBLIC: 'Tweet không công khai',
   GET_TWEET_SUCCESSFULLY: 'Lấy tweet thành công',
-  GET_TWEET_CHILDREN_SUCCESSFULLY: 'Lấy tweet con thành công'
+  GET_TWEET_CHILDREN_SUCCESSFULLY: 'Lấy tweet con thành công',
+  INVALID_LIMIT: 'Giới hạn không hợp lệ (0 < limit <= 100)',
+  INVALID_PAGE: 'Trang không hợp lệ (0 < page)'
 } as const
 
 export const BOOKMARK_MESSAGES = {
