@@ -9,6 +9,7 @@ import mediasRouter from './routes/medias.routes'
 import tweetsRouter from './routes/Tweet.routes'
 import bookmarksRouter from './routes/bookmarks.routes'
 import likesRouter from './routes/likes.routes'
+// import '~/utils/fake'
 config()
 
 databaseService.connect().then(() => {
