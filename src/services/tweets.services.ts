@@ -236,172 +236,139 @@ class TweetsService {
     }
   }
   async getNewFeeds({ user_id, limit, page }: { user_id: string; limit: number; page: number }) {
+    const user_id_obj = new ObjectId(user_id)
+
+    //  Lấy danh sách user mà user hiện tại đang follow
     const followed_user_ids = await databaseService.followers
-      .aggregate([
-        {
-          $match: { user_id: new ObjectId(user_id) } // Lọc theo người dùng hiện tại
-        },
-        {
-          // Chỉ lấy followed_user_id
-          $project: {
-            followed_user_id: 1,
-            _id: 0
-          }
-        }
-      ])
+      .find({ user_id: user_id_obj }, { projection: { followed_user_id: 1 } })
       .toArray()
     const ids = followed_user_ids.map((item) => item.followed_user_id)
-    ids.push(new ObjectId(user_id)) // Thêm chính user_id vào danh sách
-    const tweets = await databaseService.tweets
-      .aggregate([
-        { $match: { user_id: { $in: ids } } }, // Chỉ lấy tweet từ những người trong danh sách
-        { $sort: { created_at: -1 } }, // Sắp xếp theo thời gian tạo mới nhất
-        { $skip: limit * (page - 1) }, // Phân trang
-        { $limit: limit }, // Giới hạn số lượng
-        {
-          $lookup: {
-            from: 'users', // Kết hợp với bảng users để lấy thông tin người tweet
-            localField: 'user_id',
-            foreignField: '_id',
-            as: 'user'
-          }
-        },
-        { $unwind: '$user' },
-        {
-          $match: {
-            $or: [
-              {
-                audience: 0
+
+    // Thêm chính user_id vào để lấy cả tweet của mình
+    ids.push(user_id_obj)
+
+    // Query danh sách tweet và tổng số tweet đồng thời
+    const [tweets, total] = await Promise.all([
+      databaseService.tweets
+        .aggregate([
+          { $match: { user_id: { $in: ids } } },
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'user_id',
+              foreignField: '_id',
+              as: 'user',
+              pipeline: [{ $project: { password: 0, email_verify_token: 0, forgot_password_token: 0 } }]
+            }
+          },
+          { $unwind: '$user' },
+          {
+            $match: {
+              $or: [
+                { audience: 0 }, // Public
+                { audience: 1, 'user.twitter_circle': { $in: [user_id_obj] } } // Twitter Circle
+              ]
+            }
+          },
+          { $sort: { created_at: -1 } }, // Sắp xếp theo thời gian mới nhất
+          { $skip: limit * (page - 1) },
+          { $limit: limit },
+          {
+            $lookup: {
+              from: 'hashtags',
+              localField: 'hashtags',
+              foreignField: '_id',
+              as: 'hashtags',
+              pipeline: [{ $project: { _id: 1, name: 1 } }]
+            }
+          },
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'mentions',
+              foreignField: '_id',
+              as: 'mentions',
+              pipeline: [{ $project: { _id: 1, name: 1, username: 1, email: 1 } }]
+            }
+          },
+          {
+            $lookup: {
+              from: 'bookmarks',
+              localField: '_id',
+              foreignField: 'tweet_id',
+              as: 'bookmarks'
+            }
+          },
+          {
+            $lookup: {
+              from: 'likes',
+              localField: '_id',
+              foreignField: 'tweet_id',
+              as: 'likes'
+            }
+          },
+          {
+            $lookup: {
+              from: 'tweets',
+              localField: '_id',
+              foreignField: 'parent_id',
+              as: 'tweet_children'
+            }
+          },
+          {
+            $addFields: {
+              bookmarks: { $size: '$bookmarks' },
+              likes: { $size: '$likes' },
+              retweet_count: {
+                $size: {
+                  $filter: { input: '$tweet_children', as: 'item', cond: { $eq: ['$$item.type', TweetType.Retweet] } }
+                }
               },
-              {
-                $and: [
-                  {
-                    audience: 1
-                  },
-                  {
-                    'user.twitter_circle': {
-                      $in: [new ObjectId(user_id)]
-                    }
-                  }
-                ]
-              }
-            ]
-          }
-        },
-        {
-          $lookup: {
-            from: 'hashtags',
-            localField: 'hashtags',
-            foreignField: '_id',
-            as: 'hashtags'
-          }
-        },
-        {
-          $lookup: {
-            from: 'users',
-            localField: 'mentions',
-            foreignField: '_id',
-            as: 'mentions'
-          }
-        },
-        {
-          $addFields: {
-            mentions: {
-              $map: {
-                input: '$mentions',
-                as: 'mention',
-                in: {
-                  _id: '$$mention._id',
-                  name: '$$mention.name',
-                  username: '$$mention.username',
-                  email: '$$mention.email'
+              comment_count: {
+                $size: {
+                  $filter: { input: '$tweet_children', as: 'item', cond: { $eq: ['$$item.type', TweetType.Comment] } }
                 }
-              }
-            }
-          }
-        },
-        {
-          $lookup: {
-            from: 'bookmarks',
-            localField: '_id',
-            foreignField: 'tweet_id',
-            as: 'bookmarks'
-          }
-        },
-        {
-          $lookup: {
-            from: 'likes',
-            localField: '_id',
-            foreignField: 'tweet_id',
-            as: 'likes'
-          }
-        },
-        {
-          $lookup: {
-            from: 'tweets',
-            localField: '_id',
-            foreignField: 'parent_id',
-            as: 'tweet_children'
-          }
-        },
-        {
-          $addFields: {
-            bookmarks: {
-              $size: '$bookmarks'
-            },
-            likes: {
-              $size: '$likes'
-            },
-            retweet_count: {
-              $size: {
-                $filter: {
-                  input: '$tweet_children',
-                  as: 'item',
-                  cond: {
-                    $eq: ['$$item.type', 1]
-                  }
-                }
-              }
-            },
-            comment_count: {
-              $size: {
-                $filter: {
-                  input: '$tweet_children',
-                  as: 'item',
-                  cond: {
-                    $eq: ['$$item.type', 2]
-                  }
-                }
-              }
-            },
-            quote_count: {
-              $size: {
-                $filter: {
-                  input: '$tweet_children',
-                  as: 'item',
-                  cond: {
-                    $eq: ['$$item.type', 3]
+              },
+              quote_count: {
+                $size: {
+                  $filter: {
+                    input: '$tweet_children',
+                    as: 'item',
+                    cond: { $eq: ['$$item.type', TweetType.QuoteTweet] }
                   }
                 }
               }
             }
+          },
+          { $project: { tweet_children: 0 } }
+        ])
+        .toArray(),
+
+      // Tối ưu đếm tổng số tweet
+      databaseService.tweets.countDocuments({ user_id: { $in: ids } })
+    ])
+
+    // Tối ưu cập nhật lượt xem bằng bulkWrite
+    const tweet_ids = tweets.map((tweet) => tweet._id)
+    const date = new Date()
+
+    if (tweet_ids.length > 0) {
+      await databaseService.tweets.bulkWrite(
+        tweet_ids.map((id) => ({
+          updateOne: {
+            filter: { _id: id },
+            update: { $inc: { user_views: 1 }, $set: { updated_at: date } }
           }
-        },
-        {
-          $project: {
-            tweet_children: 0,
-            user: {
-              password: 0,
-              forgot_password_token: 0,
-              email_verify_token: 0,
-              twitter_circle: 0,
-              date_of_birth: 0
-            }
-          }
-        }
-      ])
-      .toArray()
-    return tweets
+        }))
+      )
+
+      tweets.forEach((tweet) => {
+        tweet.updated_at = date
+        tweet.user_views += 1
+      })
+    }
+
+    return { tweets, total }
   }
 }
 
