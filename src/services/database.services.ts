@@ -1,4 +1,4 @@
-import { MongoClient, Db, Collection } from 'mongodb'
+import { MongoClient, Db, Collection, ServerApiVersion } from 'mongodb'
 import { config } from 'dotenv'
 import User from '~/models/schemas/User.schemas'
 import RefreshToken from '~/models/schemas/RefreshToken.schemas'
@@ -10,14 +10,13 @@ import Like from '~/models/schemas/Like.schemas'
 config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@twitter.qwzev.mongodb.net/?retryWrites=true&w=majority&appName=twitter`
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-// const client = new MongoClient(uri, {
-//   serverApi: {
-//     version: ServerApiVersion.v1,
-//     strict: true,
-//     deprecationErrors: true
-//   }
-// })
-// const client = new MongoClient(uri)
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    // strict: true,
+    deprecationErrors: true
+  }
+})
 class DatabaseService {
   private client: MongoClient
   private db: Db
