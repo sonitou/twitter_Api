@@ -32,3 +32,8 @@ export enum TweetType {
   Comment, // 2 - Bình luận (trả lời một tweet)
   QuoteTweet // 3 - Trích dẫn tweet (retweet kèm nội dung)
 }
+
+export enum PeopleFollow {
+  AnyOne = '0',
+  Following = '1'
+}

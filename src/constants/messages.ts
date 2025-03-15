@@ -89,9 +89,18 @@ export const BOOKMARK_MESSAGES = {
   BOOKMARK_SUCCESSFULLY: 'Bookmark thành công',
   GET_BOOKMARK_SUCCESSFULLY: 'Lấy danh sách bookmarks thành công',
   UNBOOKMARK_SUCCESSFULLY: 'Bỏ bookmark thành công'
-}
+} as const
 
 export const LIKE_MESSAGES = {
   LIKE_SUCCESSFULLY: 'Thích thành công',
   UNLIKE_SUCCESSFULLY: 'Bỏ thích thành công'
 }
+
+export const SEARCH_MESSAGES = {
+  SEARCH_SUCCESSFULLY: 'Tìm kiếm thành công',
+  SEARCH_CONTENT_IS_REQUIRED: 'Nội dung tìm kiếm là bắt buộc',
+  SEARCH_CONTENT_MUST_BE_STRING: 'Nội dung tìm kiếm phải là một chuỗi',
+  SEARCH_CONTENT_LENGTH_MUST_BE_LESS_THAN_255: 'Nội dung tìm kiếm không được vượt quá 255 ký tự',
+  SEARCH_MEDIA_TYPE_MUST_BE_ONE_OF: 'media_type phải là một trong: ',
+  SEARCH_PEOPLE_FOLLOW_MUST_BE_0_OR_1: 'people_follow phải là 0 hoặc 1'
+} as const

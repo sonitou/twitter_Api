@@ -2,6 +2,7 @@ import { ParamsDictionary } from 'express-serve-static-core'
 import { NextFunction, Request, Response } from 'express'
 import { SearchQuery } from '~/models/requests/Search.request'
 import searchService from '~/services/search.services'
+import { SEARCH_MESSAGES } from '~/constants/messages'
 export const searchController = async (req: Request<ParamsDictionary, any, any, SearchQuery>, res: Response) => {
   const limit = Number(req.query.limit)
   const page = Number(req.query.page)
@@ -14,7 +15,7 @@ export const searchController = async (req: Request<ParamsDictionary, any, any, 
     media_type: req.query.media_type
   })
   res.json({
-    message: 'Search Successfully',
+    message: SEARCH_MESSAGES.SEARCH_SUCCESSFULLY,
     result: {
       tweets: result.tweets,
       limit,
