@@ -102,12 +102,7 @@ class UsersService {
     // 3. Client send request to server with email_verify_token
     // 4. Server verify email_verify_token
     // 5. Client receive access_token and refresh_token
-    await sendVerifyEmail(
-      payload.email,
-      'Verify your email',
-      `<h1>Verify your email</h1>
-    <p>Click <a href="${process.env.CLIENT_URL}/verify-email?token=${email_verify_token}">here</a> to verify your email</p>`
-    )
+    await sendVerifyRegisterEmail(payload.email, email_verify_token)
     return {
       access_token,
       refresh_token
