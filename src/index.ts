@@ -10,6 +10,8 @@ import tweetsRouter from './routes/Tweet.routes'
 import bookmarksRouter from './routes/bookmarks.routes'
 import likesRouter from './routes/likes.routes'
 import searchRouter from './routes/search.routes'
+import { createServer } from 'http'
+import { Server } from 'socket.io'
 // import '~/utils/fake'
 config()
 
@@ -19,8 +21,9 @@ databaseService.connect().then(() => {
   databaseService.indexFollowers()
   databaseService.indexTweets()
 })
-
 const app = express()
+const httpService = createServer(app)
+
 const port = process.env.PORT || 4000
 initFile()
 app.use(express.json())
@@ -34,7 +37,20 @@ app.use('/static/image', express.static(UPLOAD_IMAGE_DIR))
 app.use('/static/video', express.static(UPLOAD_VIDEO_DIR))
 app.use(defaultErrorHandler as express.ErrorRequestHandler)
 
+const io = new Server(httpService, {
+  cors: {
+    origin: 'http://localhost:4000'
+  }
+})
+
+io.on('connection', (socket) => {
+  console.log(`user ${socket.id} connected`)
+  socket.on('disconnect', () => {
+    console.log(`user ${socket.id} disconnected`)
+  })
+})
+
 // Khởi động server
-app.listen(port, () => {
+httpService.listen(port, () => {
   console.log(`Server chạy tại http://localhost:${port}`)
 })
