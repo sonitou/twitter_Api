@@ -48,6 +48,10 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log(`user ${socket.id} disconnected`)
   })
+  socket.emit('message', 'Hello Do Son')
+  socket.on('message', (data) => {
+    console.log(data)
+  })
 })
 
 // Khởi động server
